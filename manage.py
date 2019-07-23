@@ -1,81 +1,79 @@
-#!/usr/bin/env python
+# manage.py
+
+
 import os
-COV = None
-if os.environ.get('FLASK_COVERAGE'):
-    import coverage
-    COV = coverage.coverage(branch=True, include='app/*')
-    COV.start()
+import unittest
+import coverage
 
-if os.path.exists('.env'):
-    print('Importing environment from .env...')
-    for line in open('.env'):
-        var = line.strip().split('=')
-        if len(var) == 2:
-            os.environ[var[0]] = var[1]
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 
-from app import create_app, db
-from app.models import User, Follow, Role, Permission, Post, Comment
-from flask_script import Manager, Shell
-from flask_migrate import Migrate, MigrateCommand
+# APP_SETTINGS="project.config.ProductionConfig"
+from project import app, db
+from project.models import User, Event
+from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-manager = Manager(app)
+app.config.from_object(os.environ['APP_SETTINGS'])
+
+
 migrate = Migrate(app, db)
+manager = Manager(app)
+bootstrap = Bootstrap(app)
+moment = Moment(app)
 
-
-def make_shell_context():
-    return dict(app=app, db=db, User=User, Follow=Follow, Role=Role,
-                Permission=Permission, Post=Post, Comment=Comment)
-manager.add_command("shell", Shell(make_context=make_shell_context))
+# migrations
 manager.add_command('db', MigrateCommand)
 
 
 @manager.command
-def test(coverage=False):
-    """Run the unit tests."""
-    if coverage and not os.environ.get('FLASK_COVERAGE'):
-        import sys
-        os.environ['FLASK_COVERAGE'] = '1'
-        os.execvp(sys.executable, [sys.executable] + sys.argv)
-    import unittest
+def test():
+    """Runs the unit tests without coverage."""
+    tests = unittest.TestLoader().discover('tests')
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    if result.wasSuccessful():
+        return 0
+    else:
+        return 1
+
+
+@manager.command
+def cov():
+    """Runs the unit tests with coverage."""
+    cov = coverage.coverage(branch=True, include='project/*')
+    cov.start()
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
-    if COV:
-        COV.stop()
-        COV.save()
-        print('Coverage Summary:')
-        COV.report()
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        covdir = os.path.join(basedir, 'tmp/coverage')
-        COV.html_report(directory=covdir)
-        print('HTML version: file://%s/index.html' % covdir)
-        COV.erase()
+    cov.stop()
+    cov.save()
+    print('Coverage Summary:')
+    cov.report()
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    covdir = os.path.join(basedir, 'tmp/coverage')
+    cov.html_report(directory=covdir)
+    print('HTML version: file://%s/index.html' % covdir)
+    cov.erase()
 
 
 @manager.command
-def profile(length=25, profile_dir=None):
-    """Start the application under the code profiler."""
-    from werkzeug.contrib.profiler import ProfilerMiddleware
-    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length],
-                                      profile_dir=profile_dir)
-    app.run()
+def create_db():
+    """Creates the db tables."""
+    db.create_all()
 
 
 @manager.command
-def deploy():
-    """Run deployment tasks."""
-    from flask_migrate import upgrade
-    from app.models import Role, User
+def drop_db():
+    """Drops the db tables."""
+    db.drop_all()
 
-    # migrate database to latest revision
-    upgrade()
 
-    # create user roles
-    Role.insert_roles()
-
-    # create self-follows for all users
-    User.add_self_follows()
+@manager.command
+def create_admin():
+    """Creates the admin user."""
+    db.session.add(User("ad@min.com", "admin"))
+    db.session.commit()
 
 
 if __name__ == '__main__':
-    manager.run()
+    # manager.run()
+    app.run(debug=True)

@@ -1,0 +1,123 @@
+{% extends "main/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Clear-Colored Glasses{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+<h1 class="text-center" style="font-family: Garamond;">Look through Clear-Colored Glasses...</h1>
+</div>
+<hr class="style17">
+<div>
+</br>
+
+  <body>
+    <div class=container"><br>
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-4">
+          <h4><strong>Add a Predicted Event:</strong></h4>
+          <form method="POST" action="/events/">
+            <div class="form-group">
+             <label for="desc">Description: </label>
+             <input type="text" class="form-control" id="desc" name="desc" placeholder="Briefly describe the event you are predicting.">
+               <br>
+             <label for="want">Want: </label>
+             <!-- <input type="integer" class="form-control" id="want" name="want" placeholder="Do you want this event to happen?"> -->
+             <br>
+              <input type="radio" id="want" name="want" value = 'Yes' checked>
+              Yes
+              <br>
+              <input type="radio" id="want" name="want" value = 'No'>
+              No
+              <br>
+              <br>
+         	  <label for="likelihood?">Likelihood: </label>
+         	  <input type="integer" class="form-control" id="likelihood" name="likelihood" placeholder="How likely will the event happen?">
+              <br>
+            <label for="happened?">Happened: </label>
+            <!-- <input type="integer" class="form-control" id="happened" name="happened" placeholder="Has the event happened?"> -->
+            <br>
+              <input type="radio" id="happened" name="happened" value = 'Not yet' checked>
+               Not Yet, but it still could happen.
+              <br>
+              <input type="radio" id="happened" name="happened" value = 'Yes'>
+               Yes, it happened.
+              <br>
+              <input type="radio" id="happened" name="happened" value = 'No'>
+               No, and there is no chance it could happen anymore.
+             <br>
+            <br>
+            <input type="submit" class="btn btn-success" value="Add Event">
+            <!-- <input type="submit" value="Add Event"> -->
+            </div>
+          </form>
+        </div>
+
+<div class="col-md-2">
+</div>
+
+<div class="col-md-8">
+    <!-- <br> -->
+    <h4><strong>Predicted Events:</strong></h4>
+    <!-- </br> -->
+    <!-- <div class=container"><br> -->
+      <!-- <div class="row align-items-center justify-content-center"> -->
+        <!-- <div class="col-md-4"> -->
+    <!-- <div class="table-responsive"> -->
+      <!-- style="text-align: center;"table-condensed table-responsive table-hover table-striped-->
+      <table class="table table-condensed table-responsive table-striped style = vertical-align: middle;">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Want(ed) to happen?</th>
+            <th>Likelihood?</th>
+            <th>Happened?</th>
+            <th>Delete</th>
+          </tr>
+            </thead>
+            <tbody>
+
+    {% for event in events %}
+    <tr>
+    <td>{{event.desc}}</td>
+    <td>{{event.want}}</td>
+    <td>{{event.likelihood}}</td>
+
+    <form method="POST" action="./events/update">
+      <input type="hidden" value="{{event.desc}}" name="olddesc">
+      <input type="hidden" value="{{event.desc}}" name="newdesc">
+      <input type="hidden" value="{{event.happened}}"name="oldhappened">
+      <td><input type="text" maxlength="7" size="3" value="{{event.happened}}" name="newhappened">
+      <input type="submit" class="btn-default" value="Update"></td>
+    </form>
+
+    <form method="POST" action="./events/delete">
+      <input type="hidden" value="{{event.desc}}" name="desc">
+      <td><input type="submit" class="btn btn-danger" value="Delete"></td>
+    </form>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!-- </div>
+</div>
+</div> -->
+</div>
+</div>
+</div>
+</div>
+  </body>
+
+
+</script>
+</div>
+<hr class="style17">
+<div>
+    <p class = "text-center">
+      |  © harry durbin
+      <script type="text/JavaScript">
+        document.write(new Date().getFullYear());
+      </script> |
+   <p>
+</div>
+{% endblock %}
