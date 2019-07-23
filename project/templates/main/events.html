@@ -83,7 +83,7 @@
     <td>{{event.want}}</td>
     <td>{{event.likelihood}}</td>
 
-    <form method="POST" action="./events/update">
+    <form method="POST" action="/events/update">
       <input type="hidden" value="{{event.desc}}" name="olddesc">
       <input type="hidden" value="{{event.desc}}" name="newdesc">
       <input type="hidden" value="{{event.happened}}"name="oldhappened">
@@ -91,7 +91,7 @@
       <input type="submit" class="btn-default" value="Update"></td>
     </form>
 
-    <form method="POST" action="./events/delete">
+    <form method="POST" action="/events/delete">
       <input type="hidden" value="{{event.desc}}" name="desc">
       <td><input type="submit" class="btn btn-danger" value="Delete"></td>
     </form>

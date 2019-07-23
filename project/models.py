@@ -16,6 +16,8 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
+    events = db.relationship('Event', backref='author', lazy='dynamic')
+
     def __init__(self, email, password, paid=False, admin=False):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
@@ -46,6 +48,9 @@ class Event(db.Model):
     want = db.Column(db.String,nullable=False)
     likelihood = db.Column(db.Integer,nullable=False)
     happened = db.Column(db.String,nullable=False)
+
+    # user_id = db.Column(db.String,unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # def __init__(self, desc, want, likelihood, happened):
     #     self.desc = desc
