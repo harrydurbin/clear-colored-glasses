@@ -59,5 +59,5 @@ class Event(db.Model):
 class Score (db.Model):
 
     id = db.Column(db.Integer,unique=True,primary_key=True)
-    score = db.Column(db.Integer,nullable=False)
+    rating = db.Column(db.Integer,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
