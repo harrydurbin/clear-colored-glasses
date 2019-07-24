@@ -10,7 +10,7 @@ from flask import render_template, Blueprint, url_for, \
 from flask.ext.login import login_user, logout_user, \
     login_required, current_user
 
-import pandas as pd
+# import pandas as pd
 import sqlite3
 
 from project.models import User,Event
