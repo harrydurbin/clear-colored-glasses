@@ -44,7 +44,7 @@ class Event(db.Model):
     # __tablename__ = "Event"
 
     id = db.Column(db.Integer,unique=True,primary_key=True)
-    desc = db.Column(db.String(80),nullable=False,unique=True) #,primary_key=True)
+    desc = db.Column(db.String(80),nullable=False) #,unique=True) #,primary_key=True)
     want = db.Column(db.String,nullable=False)
     likelihood = db.Column(db.Integer,nullable=False)
     happened = db.Column(db.String,nullable=False)

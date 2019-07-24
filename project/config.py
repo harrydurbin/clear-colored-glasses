@@ -7,7 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class BaseConfig(object):
     """Base configuration."""
     SECRET_KEY = 'my_precious'
-    DEBUG = False
+    DEBUG = True
     BCRYPT_LOG_ROUNDS = 13
     WTF_CSRF_ENABLED = True
     DEBUG_TB_ENABLED = False
@@ -35,7 +35,7 @@ class ProductionConfig(BaseConfig):
     """Production configuration."""
     SECRET_KEY = 'my_precious'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite') #'postgresql://localhost/example' 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite') #'postgresql://localhost/example'
     DEBUG_TB_ENABLED = False
     STRIPE_SECRET_KEY = 'foo'
     STRIPE_PUBLISHABLE_KEY = 'bar'
