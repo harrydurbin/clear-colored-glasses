@@ -8,14 +8,15 @@ import coverage
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
-# APP_SETTINGS="project.config.ProductionConfig"
 from project import app, db
 from project.models import User, Event
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+APP_SETTINGS="project.config.ProductionConfig"
 
+# app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object("project.config.ProductionConfig")
 
 migrate = Migrate(app, db)
 manager = Manager(app)
