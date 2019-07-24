@@ -48,8 +48,6 @@ class Event(db.Model):
     want = db.Column(db.String,nullable=False)
     likelihood = db.Column(db.Integer,nullable=False)
     happened = db.Column(db.String,nullable=False)
-
-    # user_id = db.Column(db.String,unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # def __init__(self, desc, want, likelihood, happened):
@@ -57,3 +55,9 @@ class Event(db.Model):
     #     self.want = want
     #     self.likelihood = likelihood
     #     self.happened = happened
+
+class Score (db.Model):
+
+    id = db.Column(db.Integer,unique=True,primary_key=True)
+    score = db.Column(db.Integer,nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
