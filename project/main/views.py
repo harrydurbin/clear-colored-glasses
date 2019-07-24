@@ -68,7 +68,7 @@ def events():
     return render_template('main/events.html',events=events)
 
 
-@main_blueprint.route("/events/update/", methods=["POST"])
+@main_blueprint.route("/events/update", methods=["POST"])
 def update():
     newdesc = request.form.get("newdesc")
     olddesc = request.form.get("olddesc")
