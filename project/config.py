@@ -34,7 +34,7 @@ class TestingConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     """Production configuration."""
     SECRET_KEY = 'my_precious'
-    DEBUG = False
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite') #'postgresql://localhost/example'
     DEBUG_TB_ENABLED = False
     STRIPE_SECRET_KEY = 'foo'

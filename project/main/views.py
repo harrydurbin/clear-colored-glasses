@@ -10,6 +10,9 @@ from flask import render_template, Blueprint, url_for, \
 from flask.ext.login import login_user, logout_user, \
     login_required, current_user
 
+import pandas as pd
+import sqlite3
+
 from project.models import User,Event
 # from project.email import send_email
 from project import db, bcrypt, app
@@ -75,3 +78,16 @@ def delete():
     db.session.delete(event)
     db.session.commit()
     return redirect("events")
+
+@main_blueprint.route("/evaluation/",methods=['GET'])
+@login_required
+def evaluation():
+    events = Event.query.filter_by(user_id = current_user.id)
+
+    # db_file = "project/data-dev.sqlite"
+    # con = sqlite3.connect(db_file)
+    # cur = con.cursor()
+    # cur.execute("SELECT * FROM Event;")
+    # events = cur.fetchall()
+    # return events
+    return render_template('main/evaluation.html',events=events)
