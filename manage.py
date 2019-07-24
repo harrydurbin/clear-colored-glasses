@@ -13,6 +13,10 @@ from project.models import User, Event
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 
+from flask_sslify import SSLify
+
+
+
 APP_SETTINGS="project.config.ProductionConfig"
 
 # app.config.from_object(os.environ['APP_SETTINGS'])
@@ -22,6 +26,9 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+
+if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
+    sslify = SSLify(app)
 
 # migrations
 manager.add_command('db', MigrateCommand)
