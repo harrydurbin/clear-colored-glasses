@@ -87,7 +87,7 @@ def evaluation():
     db_file = "project/data-dev.sqlite"
     con = sqlite3.connect(db_file)
     cur = con.cursor()
-    query = "SELECT * FROM Event WHERE user_id = ?;"
+    query = "SELECT * FROM Event WHERE user_id = ? and happened IS NOT "Not Yet";"
     param = (current_user.id,)
     df  = pd.read_sql_query(query, con=con, params = param)
 
