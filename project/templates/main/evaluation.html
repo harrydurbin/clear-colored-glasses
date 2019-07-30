@@ -1,36 +1,61 @@
-{% extends "main/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends "_base.html" %}
+{% block content %}
 
-{% block title %}Clear-Colored Glasses{% endblock %}
-
-{% block page_content %}
-<div class="page-header">
-<h3 class="text-center" style="font-family: Garamond;">Your Results:</h3>
-</div>
+<!-- <div class="page-header"> -->
+<h3 class="text-center" style="font-family: Garamond;">Your Table Summary:</h3>
+<!-- </div> -->
 <hr class="style17">
-<div>
-  <body>
+<div class=container>
+  <table class="table table-condensed table-responsive table-striped style = vertical-align: middle;">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Want(ed) to happen?</th>
+        <th>Likelihood? (0-100)%</th>
+        <th>Happened?</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+      <tr>
+        <td>{{event.desc}}</td>
+        <td>{{event.want}}</td>
+        <td>{{event.likelihood}}</td>
+        <td>{{event.happened}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<hr class="style17">
+<!-- <div> -->
+<h3 class="text-center" style="font-family: Garamond;">Your Results:</h3>
+  <!-- <body> -->
     <div class="container center">
 
-        <div class="col-lg-4 center" align='center'>
+        <div class="col-md-4 center" align='center'>
           <h1>{{expected}}</h1>
           <p>Average expected likelihood.</p>
         </div>
 
-        <div class="col-lg-4 center" align='center'>
+        <div class="col-md-4 center" align='center'>
           <h1>{{actual}}</h1>
           <p>Average actual likelihood.</p>
         </div>
 
-        <div class="col-lg-4 center" align='center'>
+        <div class="col-md-4 center" align='center'>
           <h1>{{score}}</h1>
           <p>Differential</p>
         </div>
-
       </div>
-  </body>
+  <!-- </body> -->
 
-</script>
+{% endblock %}
+
+
+<!-- </script>
 </div>
 <hr class="style17">
 <div>
@@ -40,5 +65,4 @@
         document.write(new Date().getFullYear());
       </script> |
    <p>
-</div>
-{% endblock %}
+</div> -->

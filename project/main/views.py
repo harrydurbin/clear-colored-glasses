@@ -83,7 +83,7 @@ def delete():
 @main_blueprint.route("/evaluation/",methods=['GET'])
 @login_required
 def evaluation():
-    # events = Event.query.filter_by(user_id = current_user.id)
+    events = Event.query.filter_by(user_id = current_user.id)
     db_file = "project/data-dev.sqlite"
     con = sqlite3.connect(db_file)
     cur = con.cursor()
@@ -97,7 +97,7 @@ def evaluation():
         expected = int(round(df.likelihood.mean()/100,2)*100)
         actual = int(round((df.happened.sum()) / (df.happened.count()),2)*100)
         score = int(round((expected - actual),2))
-        return render_template('main/evaluation.html',expected=expected,actual=actual,score=score)
+        return render_template('main/evaluation.html',events=events,expected=expected,actual=actual,score=score)
     return render_template('main/evaluation1.html')
 
 @main_blueprint.route("/about/",methods=['GET'])
