@@ -1,6 +1,22 @@
 {% extends "_base.html" %}
 {% block content %}
+<head>
+  <meta name="viewport" content="width=device-width">
+<style>
+container1 {
+  /* width: 00px;
+  margin: 100px auto; */
+  text-align: center;
+}
 
+.gauge {
+  /* width: 250px;
+  height: 250px; */
+  display: inline-block;
+}
+
+</style>
+</head>
 <!-- <div class="page-header"> -->
 <h3 class="text-center" style="font-family: Garamond;">Your Table Summary:</h3>
 <!-- </div> -->
@@ -35,25 +51,46 @@
   <!-- <body> -->
     <div class="container center">
 
-        <div class="col-md-4 center" align='center'>
+        <div class="col-md-3 center" align='center'>
           <h1>{{expected}}</h1>
           <p>Average expected likelihood.</p>
         </div>
 
-        <div class="col-md-4 center" align='center'>
+        <div class="col-md-3 center" align='center'>
           <h1>{{actual}}</h1>
           <p>Average actual likelihood.</p>
         </div>
 
-        <div class="col-md-4 center" align='center'>
+        <!-- <div class="col-md-4 center" align='center'>
           <h1>{{score}}</h1>
           <p>Differential</p>
-        </div>
+        </div> -->
       </div>
   <!-- </body> -->
+<hr class="style17">
+
+
+
+
+<hr class="style17">
+
+<div class="container" id = "container1">
+  <div id="gauge1" class="1200x640px"></div>
+</div>
+
+<script src="{{url_for('static', filename='raphael-2.1.4.min.js')}}"></script>
+<script src="{{url_for('static', filename='justgage.js')}}"></script>
+<script>
+  var g = new JustGage({
+    id: "gauge1",
+    value: {{score}},
+    min: -100,
+    max: 100,
+    title: "Reality Score"
+  });
+</script>
 
 {% endblock %}
-
 
 <!-- </script>
 </div>

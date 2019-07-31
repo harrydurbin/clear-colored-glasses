@@ -60,13 +60,21 @@ def events():
 def update():
     newid = request.form.get("newid")
     oldid = request.form.get("oldid")
-    # newdesc = request.form.get("newdesc")
-    # olddesc = request.form.get("olddesc")
+    newdesc = request.form.get("newdesc")
+    olddesc = request.form.get("olddesc")
+    newwant = request.form.get("newwant")
+    oldwant = request.form.get("oldwant")
+    newlikelihood = request.form.get("newlikelihood")
+    oldlikelihood = request.form.get("oldlikelihood")
     newhappened = request.form.get("newhappened")
     oldhappened = request.form.get("oldhappened")
+
     event = Event.query.filter_by(id=oldid).first()
-    # event = Event.query.filter_by(id=olddesc).first()
     event.happened = newhappened
+    event.desc = newdesc
+    event.want = newwant
+    event.likelihood = newlikelihood
+
     db.session.commit()
     flash('The event has been updated.')
     return redirect("events")
@@ -87,13 +95,15 @@ def evaluation():
     db_file = "project/data-dev.sqlite"
     con = sqlite3.connect(db_file)
     cur = con.cursor()
-    query = "SELECT * FROM Event WHERE user_id = ? and happened != 'Not yet' ;"
+    query = "SELECT * FROM Event WHERE user_id = ? and happened != 'Not yet';"
     param = (current_user.id,)
     df  = pd.read_sql_query(query, con=con, params = param)
 
     if df.happened.count()>0:
         df.happened = df.happened.replace('No',0)
+        df.happened = df.happened.replace('no',0)
         df.happened = df.happened.replace('Yes',1)
+        df.happened = df.happened.replace('yes',1)
         expected = int(round(df.likelihood.mean()/100,2)*100)
         actual = int(round((df.happened.sum()) / (df.happened.count()),2)*100)
         score = int(round((expected - actual),2))
@@ -103,3 +113,7 @@ def evaluation():
 @main_blueprint.route("/about/",methods=['GET'])
 def about():
     return render_template('main/about.html')
+
+@main_blueprint.route("/gauge/",methods=['GET'])
+def gauge():
+    return render_template('main/gauge.html')

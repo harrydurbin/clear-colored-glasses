@@ -74,16 +74,31 @@
 
     {% for event in events %}
     <tr>
-    <td>{{event.desc}}</td>
-    <td>{{event.want}}</td>
-    <td>{{event.likelihood}}</td>
+    <!-- <td>{{event.desc}}</td>
+    <td>{{event.want}}</td> -->
+    <!-- <td>{{event.likelihood}}</td> -->
+
 
     <form method="POST" action="/events/update">
       <input type="hidden" value="{{event.id}}" name="oldid">
       <input type="hidden" value="{{event.id}}" name="newid">
-      <!-- <input type="hidden" value="{{event.desc}}" name="olddesc">
-      <input type="hidden" value="{{event.desc}}" name="newdesc"> -->
+
+      <!-- temporary -->
+      <input type="hidden" value="{{event.desc}}" name="olddesc">
+      <input type="hidden" value="{{event.want}}" name="oldwant">
+      <input type="hidden" value="{{event.likelihood}}" name="oldlikelihood">
       <input type="hidden" value="{{event.happened}}"name="oldhappened">
+
+      <td><input type="text" value="{{event.desc}}" name="newdesc">
+      <input type="submit" class="btn-default" value="Update"></td>
+
+      <td><input type="text" maxlength="7"  size="3" value="{{event.want}}" name="newwant">
+      <input type="submit" class="btn-default" value="Update"></td>
+
+      <td><input type="integer" maxlength="7" size="3"  value="{{event.likelihood}}" name="newlikelihood">
+      <input type="submit" class="btn-default" value="Update"></td>
+
+      <!-- <td>{{event.happened}}</td> -->
       <td><input type="text" maxlength="7" size="3" value="{{event.happened}}" name="newhappened">
       <input type="submit" class="btn-default" value="Update"></td>
     </form>
