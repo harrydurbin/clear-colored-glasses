@@ -18,6 +18,8 @@ class User(db.Model):
 
     events = db.relationship('Event', backref='author', lazy='dynamic')
 
+    scores = db.relationship('Score', backref='author', lazy='dynamic')
+
     def __init__(self, email, password, paid=False, admin=False):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
@@ -59,5 +61,8 @@ class Event(db.Model):
 class Score (db.Model):
 
     id = db.Column(db.Integer,unique=True,primary_key=True)
-    rating = db.Column(db.Integer,nullable=False)
+    scored_on = db.Column(db.DateTime, nullable=False)
+    reality = db.Column(db.Integer,nullable=False)
+    accuracy = db.Column(db.Integer,nullable=False)
+    num = db.Column(db.Integer,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

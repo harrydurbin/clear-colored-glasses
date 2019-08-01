@@ -1,22 +1,24 @@
 {% extends "_base.html" %}
 {% block content %}
-<head>
+
+<!-- <head>
   <meta name="viewport" content="width=device-width">
 <style>
-container1 {
-  /* width: 00px;
-  margin: 100px auto; */
+.container {
+  width: 600px;
+  margin: 100px auto;
   text-align: center;
 }
 
 .gauge {
-  /* width: 250px;
-  height: 250px; */
+  width: 600px;
+  height: 600px;
   display: inline-block;
 }
 
 </style>
-</head>
+</head> -->
+
 <!-- <div class="page-header"> -->
 <h3 class="text-center" style="font-family: Garamond;">Your Table Summary:</h3>
 <!-- </div> -->
@@ -52,31 +54,44 @@ container1 {
     <div class="container center">
 
         <div class="col-md-3 center" align='center'>
-          <h1>{{expected}}</h1>
+          <h1>{{expected}}%</h1>
           <p>Average expected likelihood.</p>
         </div>
 
         <div class="col-md-3 center" align='center'>
-          <h1>{{actual}}</h1>
+          <h1>{{actual}}%</h1>
           <p>Average actual likelihood.</p>
         </div>
 
-        <!-- <div class="col-md-4 center" align='center'>
-          <h1>{{score}}</h1>
+        <div class="col-md-3 center" align='center'>
+          <h1>{{score}}%</h1>
           <p>Differential</p>
-        </div> -->
+        </div>
+
+        <div class="col-md-3 center" align='center'>
+          <h1>{{accuracy}}%</h1>
+          <p>Accuracy</p>
+        </div>
+
       </div>
   <!-- </body> -->
-<hr class="style17">
 
-
-
+{% block body %}
 
 <hr class="style17">
 
-<div class="container" id = "container1">
-  <div id="gauge1" class="1200x640px"></div>
+
+<div class="container">
+  <div id="gauge1" class="600x600px"></div>
+  </br>
+<!-- </div>
+
+<div class="container"> -->
+  <div id="gauge2" class="600x600px"></div>
 </div>
+
+{% endblock %}
+
 
 <script src="{{url_for('static', filename='raphael-2.1.4.min.js')}}"></script>
 <script src="{{url_for('static', filename='justgage.js')}}"></script>
@@ -86,14 +101,21 @@ container1 {
     value: {{score}},
     min: -100,
     max: 100,
-    title: "Reality Score"
+    title: "Likelihood Score"
   });
+
+  var g1 = new JustGage({
+    id: "gauge2",
+    value: {{accuracy}},
+    min: 0,
+    max: 100,
+    title: "Accuracy Score"
+  });
+
 </script>
 
-{% endblock %}
 
-<!-- </script>
-</div>
+
 <hr class="style17">
 <div>
     <p class = "text-center">
@@ -102,4 +124,6 @@ container1 {
         document.write(new Date().getFullYear());
       </script> |
    <p>
-</div> -->
+</div>
+
+<!-- {% endblock %} -->

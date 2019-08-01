@@ -1,5 +1,5 @@
-<!-- <!doctype html>
-<html> -->
+<!doctype html>
+<html>
 
 <!-- <head>
   <meta charset="utf-8" />
@@ -13,8 +13,8 @@
   }
 
   .gauge {
-    width: 250px;
-    height: 250px;
+    width: 600px;
+    height: 600px;
     display: inline-block;
   }
 
@@ -22,17 +22,33 @@
 </head> -->
 
 <div class="container">
-  <div id="gauge1" class="200x160px"></div>
+  <div id="gauge1"></div>
+  </br>
 </div>
+
+<!-- <div class="container">
+  <div id="gauge2" class="600x600px"></div>
+</div> -->
+
 
 <script src="{{url_for('static', filename='raphael-2.1.4.min.js')}}"></script>
 <script src="{{url_for('static', filename='justgage.js')}}"></script>
+
 <script>
   var g = new JustGage({
     id: "gauge1",
-    value: 10,
+    value: 11,
+    min: -100,
+    max: 100,
+    title: "Likelihood Score"
+  });
+
+  var g1 = new JustGage({
+    id: "gauge2",
+    value: 11,
     min: 0,
     max: 100,
-    title: "Optimism"
+    title: "Accuracy Score"
   });
+
 </script>

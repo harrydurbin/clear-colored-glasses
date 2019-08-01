@@ -13,12 +13,14 @@ from flask.ext.login import login_user, logout_user, \
 # import pandas as pd
 import sqlite3
 import pandas as pd
+import datetime
 
-from project.models import User,Event
+from project.models import User,Event, Score
 # from project.email import send_email
 from project import db, bcrypt, app
 # from .forms import LoginForm, RegisterForm, ChangePasswordForm
 
+# from sqlalchemy import _or
 
 ################
 #### config ####
@@ -91,7 +93,9 @@ def delete():
 @main_blueprint.route("/evaluation/",methods=['GET'])
 @login_required
 def evaluation():
-    events = Event.query.filter_by(user_id = current_user.id)
+    events = Event.query.filter_by(user_id = current_user.id).filter(
+    Event.happened.like('Yes') | Event.happened.like('No'))
+
     db_file = "project/data-dev.sqlite"
     con = sqlite3.connect(db_file)
     cur = con.cursor()
@@ -99,15 +103,33 @@ def evaluation():
     param = (current_user.id,)
     df  = pd.read_sql_query(query, con=con, params = param)
 
+    def is_accurate(x):
+        if x.likelihood > 50 and x.happened==1:
+            return 1
+        elif x.likelihood < 50 and x.happened==0:
+            return 0
+        else:
+            return 0.5
+
     if df.happened.count()>0:
         df.happened = df.happened.replace('No',0)
         df.happened = df.happened.replace('no',0)
         df.happened = df.happened.replace('Yes',1)
         df.happened = df.happened.replace('yes',1)
+        # df['accuracy'] =df['name'].map(capitalizer)
+        df['accuracy'] = df.apply(is_accurate, axis=1)
         expected = int(round(df.likelihood.mean()/100,2)*100)
         actual = int(round((df.happened.sum()) / (df.happened.count()),2)*100)
-        score = int(round((expected - actual),2))
-        return render_template('main/evaluation.html',events=events,expected=expected,actual=actual,score=score)
+        reality_score = int(round((expected - actual),2))
+        accuracy = int(round((df.accuracy.sum()) / (df.accuracy.count()),2)*100)
+        num = df.happened.count()
+        scored_on = datetime.datetime.now()
+
+        score = Score(scored_on=scored_on,reality=reality_score,accuracy=accuracy,num=num,author=current_user._get_current_object())
+        db.session.add(score)
+        db.session.commit()
+
+        return render_template('main/evaluation.html',events=events,expected=expected,actual=actual,score=reality_score,accuracy=accuracy)
     return render_template('main/evaluation1.html')
 
 @main_blueprint.route("/about/",methods=['GET'])
