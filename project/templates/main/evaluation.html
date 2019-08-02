@@ -20,9 +20,12 @@
 </head> -->
 
 <!-- <div class="page-header"> -->
-<h3 class="text-center" style="font-family: Garamond;">Your Table Summary:</h3>
-<!-- </div> -->
 <hr class="style17">
+<h3 class="text-center" style="font-family: Garamond;">Your Table Summary:</h3>
+<p></pr>
+<!-- </div> -->
+<!-- </br> -->
+
 <div class=container>
   <table class="table table-condensed table-responsive table-striped style = vertical-align: middle;">
     <thead>
@@ -51,45 +54,38 @@
 <!-- <div> -->
 <h3 class="text-center" style="font-family: Garamond;">Your Results:</h3>
   <!-- <body> -->
-    <div class="container center">
+    <!-- <div class="container center">
 
-        <div class="col-md-3 center" align='center'>
+        <div class="col-sm-3 center" align='center'>
           <h1>{{expected}}%</h1>
           <p>Average expected likelihood.</p>
         </div>
 
-        <div class="col-md-3 center" align='center'>
+        <div class="col-sm-3 center" align='center'>
           <h1>{{actual}}%</h1>
           <p>Average actual likelihood.</p>
         </div>
 
-        <div class="col-md-3 center" align='center'>
+        <div class="col-sm-3 center" align='center'>
           <h1>{{score}}%</h1>
           <p>Differential</p>
         </div>
 
-        <div class="col-md-3 center" align='center'>
+        <div class="col-sm-3 center" align='center'>
           <h1>{{accuracy}}%</h1>
           <p>Accuracy</p>
         </div>
 
-      </div>
+      </div> -->
   <!-- </body> -->
 
 {% block body %}
 
-<hr class="style17">
-
-
-<div class="container">
-  <div id="gauge1" class="600x600px"></div>
-  </br>
-<!-- </div>
-
-<div class="container"> -->
-  <div id="gauge2" class="600x600px"></div>
-</div>
-
+<!-- <hr class="style17"> -->
+        <div id="gauge1" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+        <div id="gauge2" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+        <div id="gauge3" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+        <div id="gauge4" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
 {% endblock %}
 
 
@@ -98,20 +94,38 @@
 <script>
   var g = new JustGage({
     id: "gauge1",
-    value: {{score}},
-    min: -100,
+    value: {{expected}},
+    min: 0,
     max: 100,
-    title: "Likelihood Score"
+    title: "Avg Expected Occurance",
+    levelColorsGradient: false
   });
 
   var g1 = new JustGage({
     id: "gauge2",
+    value: {{actual}},
+    min: 0,
+    max: 100,
+    title: "Avg Actual Occurance",
+    levelColorsGradient: 'False'
+  });
+  var g2 = new JustGage({
+    id: "gauge3",
+    value: {{score}},
+    min: -100,
+    max: 100,
+    title: "Expected-Actual Differential",
+    levelColorsGradient: 'False'
+  });
+
+  var g3 = new JustGage({
+    id: "gauge4",
     value: {{accuracy}},
     min: 0,
     max: 100,
-    title: "Accuracy Score"
+    title: "Accuracy",
+    levelColorsGradient: false
   });
-
 </script>
 
 
