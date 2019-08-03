@@ -38,13 +38,13 @@
       </ul> -->
 
       <ul class="nav navbar-nav">
-        <!-- {% if current_user.is_authenticated() %} -->
+        {% if current_user.is_authenticated() %}
           <li><a href="{{ url_for('main.events') }}">Add/Edit Events</a></li>
         {% endif %}
       </ul>
 
       <ul class="nav navbar-nav">
-        <!-- {% if current_user.is_authenticated() %} -->
+        {% if current_user.is_authenticated() %}
           <li><a href="{{ url_for('main.evaluation') }}">See Results</a></li>
         {% endif %}
       </ul>
