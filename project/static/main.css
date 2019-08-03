@@ -15,6 +15,7 @@ body {
 .navbar .nav > li.current-menu-ancestor > a {
 font-family:    Garamond !important;
 font-weight:    bold;
+color:    Silver;
 }
 
 .navbar {
