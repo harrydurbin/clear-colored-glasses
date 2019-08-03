@@ -39,7 +39,7 @@ font-weight:    bold;
   /* height: 100px; */
   position: fixed;
   top: -100px;
-  bottom: 100px;
+  bottom: -100px;
   /* padding-bottom: 0; */
   /* background: #AE1; */
 
