@@ -1,7 +1,7 @@
 /* custom styles */
 
 body {
-  padding-top: 5px;
+  padding-top: 0px;
 }
 
 /* h1,
@@ -15,7 +15,9 @@ body {
 .navbar .nav > li.current-menu-ancestor > a {
 font-family:    Garamond !important;
 font-weight:    bold;
-color:    Silver;
+color:    White;
+text-shadow: 2px 2px #000000;
+/* opacity: 1; */
 }
 
 .navbar {
@@ -35,7 +37,7 @@ color:    Silver;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: 1;
+  opacity: 0.9;
   width: 100%;
   /* height: 100px; */
   position: fixed;
