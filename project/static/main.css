@@ -1,7 +1,7 @@
 /* custom styles */
 
 body {
-  padding-top: 70px;
+  padding-top: 5px;
 }
 
 /* h1,
@@ -28,7 +28,7 @@ font-weight:    bold;
   /* The image used */
   background-image: url("glasses.png");
 
-  min-height: 190px;
+  min-height: 200px;
   margin:0px;
   /* Center and scale the image nicely */
   background-position: center;
@@ -39,7 +39,7 @@ font-weight:    bold;
   /* height: 100px; */
   position: fixed;
   top: -100px;
-  bottom: 50px;
+  bottom: 5px;
   /* padding-bottom: 0; */
   /* background: #AE1; */
 
