@@ -2,9 +2,9 @@
 {% block content %}
 
 <div class="page-header">
-<h3 class="text-center" style="font-family: Garamond;">Look through Clear-Colored Glasses...</h3>
+<h3 class="text-center" style="font-family: Garamond;">Add or Edit Events</h3>
 </div>
-<hr class="style17">
+<!-- <hr class="style17"> -->
 <div>
   <body>
     <div class=container"><br>
@@ -90,27 +90,32 @@
       <input type="hidden" value="{{event.happened}}"name="oldhappened">
 
       <td><input type="text" value="{{event.desc}}" name="newdesc">
-      <input type="submit" class="btn-default" value="Update"></td>
+      <input type="submit" class="btn-default btn-xs" value="Update"></td>
 
       <td><input type="text" maxlength="7"  size="3" value="{{event.want}}" name="newwant">
-      <input type="submit" class="btn-default" value="Update"></td>
+      <input type="submit" class="btn-default btn-xs" value="Update"></td>
 
       <td><input type="integer" maxlength="7" size="3"  value="{{event.likelihood}}" name="newlikelihood">
-      <input type="submit" class="btn-default" value="Update"></td>
+      <input type="submit" class="btn-default btn-xs" value="Update"></td>
 
       <!-- <td>{{event.happened}}</td> -->
       <td><input type="text" maxlength="7" size="3" value="{{event.happened}}" name="newhappened">
-      <input type="submit" class="btn-default" value="Update"></td>
+      <input type="submit" class="btn-default btn-xs" value="Update"></td>
     </form>
 
     <form method="POST" action="/events/delete">
       <input type="hidden" value="{{event.desc}}" name="desc">
-      <td><input type="submit" class="btn btn-danger" value="Delete"></td>
+      <td><input type="submit" class="btn btn-danger btn-xs" value="Delete"></td>
     </form>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
+<div>
+  <a class="btn btn-sm btn-info" href="../evaluation/">Summary</a>
+</div>
+
 <!-- </div>
 </div>
 </div> -->

@@ -14,9 +14,35 @@ body {
 .navbar .nav > li.current-menu-item > a,
 .navbar .nav > li.current-menu-ancestor > a {
 font-family:    Garamond !important;
+font-weight:    bold;
 }
 
 .navbar {
-     background-color: DarkSlateGray !important;
-     border-color: #080808;
+     background-color: transparent;
+     /* DarkSlateGray; !important; */
+     border-color: transparent;
+     /* #080808; */
+}
+
+.bg-img {
+  /* The image used */
+  background-image: url("glasses.png");
+
+  min-height: 190px;
+  margin:0px;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+  width: 100%;
+  /* height: 100px; */
+  position: fixed;
+  top: -100px;
+  bottom: 50px;
+  /* padding-bottom: 0; */
+  /* background: #AE1; */
+
+  /* Needed to position the navbar */
+  position: relative;
 }
