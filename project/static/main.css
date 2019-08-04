@@ -16,7 +16,8 @@ body {
   font-family: 'Garamond', serif;
 } */
 
-.navbar .nav > li > a, .navbar .nav > li > a:first-letter,
+/* .navbar .nav > li > a:first-letter, */
+.navbar .nav > li > a, 
 .navbar .nav > li.current-menu-item > a,
 .navbar .nav > li.current-menu-ancestor > a {
 font-family:    Garamond !important;
