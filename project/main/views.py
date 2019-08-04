@@ -20,7 +20,15 @@ from project.models import User,Event, Score
 from project import db, bcrypt, app
 # from .forms import LoginForm, RegisterForm, ChangePasswordForm
 
-# from sqlalchemy import _or
+from bokeh.plotting import figure, show, output_file, output_notebook
+from bokeh.palettes import Spectral11, colorblind, Inferno, BuGn, brewer
+from bokeh.models import HoverTool, value, LabelSet, Legend, ColumnDataSource,LinearColorMapper,BasicTicker, PrintfTickFormatter, ColorBar
+import json
+import bokeh
+from bokeh.plotting import figure
+from bokeh.embed import components
+from bokeh.resources import INLINE
+from bokeh.util.string import encode_utf8
 
 ################
 #### config ####
@@ -129,7 +137,48 @@ def evaluation():
         db.session.add(score)
         db.session.commit()
 
-        return render_template('main/evaluation.html',events=events,expected=expected,actual=actual,score=reality_score,accuracy=accuracy)
+        # plot scores
+        query1 = "SELECT * FROM Score WHERE user_id = ?;"
+        param = (current_user.id,)
+        # cur.execute(query1,param)
+        # scores = cur.fetchall()
+        df_scores  = pd.read_sql_query(query1, con=con, params = param)
+        df_scores['dt']=pd.to_datetime(df_scores.scored_on)
+        TOOLS = 'crosshair,save,pan,box_zoom,reset,wheel_zoom'
+        p = figure(title="", y_axis_type="linear",x_axis_type='datetime', tools = TOOLS)
+        p.line(df_scores['dt'], df_scores.accuracy, legend="Accuracy", line_color="magenta", line_width = 3)
+        p.line(df_scores['dt'], df_scores.reality, legend="Reality", line_color="blue", line_width = 3)
+        p.circle(df_scores['dt'], df_scores.accuracy, line_color='magenta',fill_color="white", size=8)
+        p.circle(df_scores['dt'], df_scores.reality, line_color='blue',fill_color="white", size=8)
+        # p.line(stolen_property['Date'], stolen_property.IncidntNum, legend="stolen_property", line_color="blue", line_width = 3)
+        p.legend.location = "top_left"
+        p.xaxis.axis_label = 'Date'
+        p.yaxis.axis_label = 'Value'
+        # output_file("multiline_plot.html", title="Multi Line Plot")
+        # show(p)  # open a browser
+        # script, div = components(p)
+
+        # return render_template('main/evaluation.html',script1=script,div1=div)
+        # grab the static resources
+        js_resources = INLINE.render_js()
+        css_resources = INLINE.render_css()
+
+        # render template
+        script, div = components(p)
+        html = render_template(
+            'main/evaluation.html',
+            events=events,
+            expected=expected,
+            actual=actual,
+            score=reality_score,
+            accuracy=accuracy,
+            plot_script=script,
+            plot_div=div,
+            js_resources=js_resources,
+            css_resources=css_resources,
+        )
+        return encode_utf8(html)
+        # return render_template('main/evaluation.html',events=events,expected=expected,actual=actual,score=reality_score,accuracy=accuracy,script=script,div=div)
     return render_template('main/evaluation1.html')
 
 @main_blueprint.route("/about/",methods=['GET'])

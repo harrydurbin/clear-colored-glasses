@@ -1,6 +1,11 @@
 {% extends "_base.html" %}
 {% block content %}
 
+<head>
+  {{ js_resources|indent(4)|safe }}
+  {{ css_resources|indent(4)|safe }}
+  {{ plot_script|indent(4)|safe }}
+</head>
 <!-- <head>
   <meta name="viewport" content="width=device-width">
 <style>
@@ -82,7 +87,7 @@
 {% block body %}
 
 <!-- <hr class="style17"> -->
-<div class="container style = vertical-align: middle;">
+<div class="container style = horizontal-align: middle;">
         <div id="gauge1" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
         <div id="gauge2" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
         <div id="gauge3" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
@@ -129,6 +134,13 @@
     levelColorsGradient: false
   });
 </script>
+
+<hr class="style17">
+<h3 class="text-center" style="font-family: Garamond;">Values over Time:</h3>
+<div class='container' style = horizontal-align: middle;>
+  {{ plot_div|safe }}
+<!-- {{ plot_div|indent(4)|safe }} -->
+</div>
 
 
 
