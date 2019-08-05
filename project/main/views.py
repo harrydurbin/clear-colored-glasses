@@ -25,7 +25,7 @@ from bokeh.palettes import Spectral11, colorblind, Inferno, BuGn, brewer
 from bokeh.models import HoverTool, value, LabelSet, Legend, ColumnDataSource,LinearColorMapper,BasicTicker, PrintfTickFormatter, ColorBar
 import json
 import bokeh
-from bokeh.plotting import figure
+from bokeh.plotting import figure, gridplot
 from bokeh.embed import components
 from bokeh.resources import INLINE
 from bokeh.util.string import encode_utf8
@@ -145,19 +145,19 @@ def evaluation():
         df_scores  = pd.read_sql_query(query1, con=con, params = param)
         df_scores['dt']=pd.to_datetime(df_scores.scored_on)
         TOOLS = 'crosshair,save,pan,box_zoom,reset,wheel_zoom'
-        p = figure(title="", y_axis_type="linear",x_axis_type='datetime', tools = TOOLS)
-        p.line(df_scores['dt'], df_scores.accuracy, legend="Accuracy", line_color="magenta", line_width = 3)
-        p.line(df_scores['dt'], df_scores.reality, legend="Reality", line_color="blue", line_width = 3)
+        p = figure(title="", y_axis_type="linear",x_axis_type='datetime', tools = TOOLS,width=1000, height=300)
+        p.line(df_scores['dt'], df_scores.accuracy, legend="Accuracy %", line_color="magenta", line_width = 3)
+        p.line(df_scores['dt'], df_scores.reality, legend="Differential %", line_color="blue", line_width = 3)
         p.circle(df_scores['dt'], df_scores.accuracy, line_color='magenta',fill_color="white", size=8)
         p.circle(df_scores['dt'], df_scores.reality, line_color='blue',fill_color="white", size=8)
         # p.line(stolen_property['Date'], stolen_property.IncidntNum, legend="stolen_property", line_color="blue", line_width = 3)
         p.legend.location = "top_left"
         p.xaxis.axis_label = 'Date'
         p.yaxis.axis_label = 'Value'
+        p.sizing_mode="scale_both"
         # output_file("multiline_plot.html", title="Multi Line Plot")
         # show(p)  # open a browser
         # script, div = components(p)
-
         # return render_template('main/evaluation.html',script1=script,div1=div)
         # grab the static resources
         js_resources = INLINE.render_js()

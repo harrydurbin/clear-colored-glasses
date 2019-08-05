@@ -17,7 +17,7 @@ body {
 } */
 
 /* .navbar .nav > li > a:first-letter, */
-.navbar .nav > li > a, 
+.navbar .nav > li > a,
 .navbar .nav > li.current-menu-item > a,
 .navbar .nav > li.current-menu-ancestor > a {
 font-family:    Garamond !important;
@@ -46,7 +46,7 @@ color:    Black;
   /* The image used */
   background-image: url("glasses.png");
 
-  min-height: 400px;
+  min-height: 200px;
   margin:0px;
   /* Center and scale the image nicely */
   background-position: center;
@@ -57,7 +57,7 @@ color:    Black;
   /* height: 100px; */
   /* position: fixed; */
   top: -40px;
-  bottom: 300px;
+  bottom: 0px;
   /* padding-bottom: 0; */
   /* background: #AE1; */
 

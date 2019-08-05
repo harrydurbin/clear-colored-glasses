@@ -6,33 +6,16 @@
   {{ css_resources|indent(4)|safe }}
   {{ plot_script|indent(4)|safe }}
 </head>
-<!-- <head>
-  <meta name="viewport" content="width=device-width">
-<style>
-.container {
-  width: 600px;
-  margin: 100px auto;
-  text-align: center;
-}
-
-.gauge {
-  width: 600px;
-  height: 600px;
-  display: inline-block;
-}
-
-</style>
-</head> -->
 
 <!-- <div class="page-header"> -->
 <hr class="style17">
-<h3 class="text-center" style="font-family: Garamond;">Your Table Summary:</h3>
+<h5 class="text-center" style="font-family: Garamond;">Events</h5>
 <p></pr>
 <!-- </div> -->
 <!-- </br> -->
 
-<div class=container>
-  <table class="table table-condensed table-responsive table-striped style = vertical-align: middle;">
+<div class="container">
+  <table class="table table-condensed table-responsive table-striped" style = "vertical-align: middle;">
     <thead>
       <tr>
         <th>Description</th>
@@ -56,44 +39,25 @@
 
 
 <hr class="style17">
-<!-- <div> -->
-<h3 class="text-center" style="font-family: Garamond;">Your Results:</h3>
-  <!-- <body> -->
-    <!-- <div class="container center">
-
-        <div class="col-sm-3 center" align='center'>
-          <h1>{{expected}}%</h1>
-          <p>Average expected likelihood.</p>
-        </div>
-
-        <div class="col-sm-3 center" align='center'>
-          <h1>{{actual}}%</h1>
-          <p>Average actual likelihood.</p>
-        </div>
-
-        <div class="col-sm-3 center" align='center'>
-          <h1>{{score}}%</h1>
-          <p>Differential</p>
-        </div>
-
-        <div class="col-sm-3 center" align='center'>
-          <h1>{{accuracy}}%</h1>
-          <p>Accuracy</p>
-        </div>
-
-      </div> -->
-  <!-- </body> -->
+<h5 class="text-center" style="font-family: Garamond;">Results</h5>
 
 {% block body %}
 
 <!-- <hr class="style17"> -->
-<div class="container style = horizontal-align: middle;">
-        <div id="gauge1" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
-        <div id="gauge2" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
-        <div id="gauge3" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
-        <div id="gauge4" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+<!-- <div class="container responsive" style = "horizontal-align: middle;"> -->
+<div class="container">
+    <div id="gauge1" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+    <div id="gauge2" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+    <div id="gauge3" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
+    <div id="gauge4" style="width:250px; height:250px; display: inline-block; margin: 1em;"></div>
 </div>
+<!-- </div> -->
 {% endblock %}
+
+<!-- <div class="container" style = "vertical-align: middle;">
+    <p> Your average expected likelihood probability for all events that have occurred is {{expected}}%.
+</div> -->
+
 
 
 <script src="{{url_for('static', filename='raphael-2.1.4.min.js')}}"></script>
@@ -104,25 +68,68 @@
     value: {{expected}},
     min: 0,
     max: 100,
-    title: "Avg Expected Occurance",
-    levelColorsGradient: false
-  });
+    title: "Expected %",
+    titleFontColor: "black",
+    labelFontColor: "black",
+    // levelColors: ["yellow"],
+    symbol: '%',
+    pointer: true,
+    gaugeWidthScale: 1,
+    customSectors: [{
+      color: '#ffffff',
+      lo: 0,
+      hi: 100
+      }, {
+        color: '#ffffff',
+        lo: -100,
+        hi: 0
+      }],
+    });
 
   var g1 = new JustGage({
     id: "gauge2",
     value: {{actual}},
     min: 0,
     max: 100,
-    title: "Avg Actual Occurance",
-    levelColorsGradient: 'False'
+    title: "Actual %",
+    titleFontColor: "black",
+    labelFontColor: "black",
+    // levelColors: ["green"],
+    symbol: '%',
+    pointer: true,
+    gaugeWidthScale: 1,
+    customSectors: [{
+      color: '#ffffff',
+      lo: 0,
+      hi: 100
+    }, {
+      color: '#ffffff',
+      lo: -100,
+      hi: 0
+    }],
   });
+
   var g2 = new JustGage({
     id: "gauge3",
     value: {{score}},
     min: -100,
     max: 100,
-    title: "Expected-Actual Differential",
-    levelColorsGradient: 'False'
+    title: "Differential %",
+    titleFontColor: "black",
+    labelFontColor: "black",
+    // levelColors: ["blue"]
+    symbol: '%',
+    pointer: true,
+    gaugeWidthScale: 1,
+    customSectors: [{
+      color: '#ffffff',
+      lo: 0,
+      hi: 100
+    }, {
+      color: '#ffffff',
+      lo: -100,
+      hi: 0
+    }],
   });
 
   var g3 = new JustGage({
@@ -130,17 +137,31 @@
     value: {{accuracy}},
     min: 0,
     max: 100,
-    title: "Accuracy",
-    levelColorsGradient: false
-  });
+    title: "Accuracy %",
+    titleFontColor: "black",
+    labelFontColor: "black",
+    // levelColors: ["magenta"],
+    symbol: '%',
+    pointer: true,
+    gaugeWidthScale: 1,
+    customSectors: [{
+      color: '#ffffff',
+      lo: 0,
+      hi: 100
+      }, {
+        color: '#ffffff',
+        lo: -100,
+        hi: 0
+      }],
+    });
 </script>
 
 <hr class="style17">
-<h3 class="text-center" style="font-family: Garamond;">Values over Time:</h3>
-<div class='container' style = horizontal-align: middle;>
-  <div class="col-sm-8">
+<h5 class="text-center" style="font-family: Garamond;">History</h5>
+<div class='container responsive'>
+  <!-- <div class="col-sm-8 responsive"> -->
   {{ plot_div|safe }}
-  </div>
+  <!-- </div> -->
 <!-- {{ plot_div|indent(4)|safe }} -->
 </div>
 
