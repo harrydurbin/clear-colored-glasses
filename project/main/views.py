@@ -144,17 +144,25 @@ def evaluation():
         # scores = cur.fetchall()
         df_scores  = pd.read_sql_query(query1, con=con, params = param)
         df_scores['dt']=pd.to_datetime(df_scores.scored_on)
-        TOOLS = 'crosshair,save,pan,box_zoom,reset,wheel_zoom'
+        TOOLS = 'crosshair,save,pan,box_zoom,reset,wheel_zoom,hover'
         p = figure(title="", y_axis_type="linear",x_axis_type='datetime', tools = TOOLS,width=1000, height=600)
-        p.line(df_scores['dt'], df_scores.accuracy, legend="Accuracy %", line_color="magenta", line_width = 3)
-        p.line(df_scores['dt'], df_scores.reality, legend="Differential %", line_color="blue", line_width = 3)
-        p.circle(df_scores['dt'], df_scores.accuracy, line_color='magenta',fill_color="white", size=8)
+        # p.line(df_scores['dt'], df_scores.accuracy, legend="Accuracy %", line_color="magenta", line_width = 3)
+        p.line(df_scores['dt'], df_scores.reality, legend="Optimism", line_color="blue", line_width = 3)
+        # p.circle(df_scores['dt'], df_scores.accuracy, line_color='magenta',fill_color="white", size=8)
         p.circle(df_scores['dt'], df_scores.reality, line_color='blue',fill_color="white", size=8)
         # p.line(stolen_property['Date'], stolen_property.IncidntNum, legend="stolen_property", line_color="blue", line_width = 3)
-        p.legend.location = "top_left"
+        # p.legend.location = "bottom_left"
         p.xaxis.axis_label = 'Date'
         p.yaxis.axis_label = 'Value'
         p.sizing_mode="scale_both"
+        # p.add_tools(HoverTool(show_arrow=False, line_policy='next', tooltips=[
+        # ('X_value', '@X_value'),
+        # ('Y_value', '@Y_value')
+        # ]))
+        p.select_one(HoverTool).tooltips = [
+            # ('Date', '@x'),
+            ('Optimism', '@y'),
+        ]
         # output_file("multiline_plot.html", title="Multi Line Plot")
         # show(p)  # open a browser
         # script, div = components(p)
