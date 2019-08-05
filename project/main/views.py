@@ -145,7 +145,7 @@ def evaluation():
         df_scores  = pd.read_sql_query(query1, con=con, params = param)
         df_scores['dt']=pd.to_datetime(df_scores.scored_on)
         TOOLS = 'crosshair,save,pan,box_zoom,reset,wheel_zoom'
-        p = figure(title="", y_axis_type="linear",x_axis_type='datetime', tools = TOOLS,width=1000, height=300)
+        p = figure(title="", y_axis_type="linear",x_axis_type='datetime', tools = TOOLS,width=1000, height=600)
         p.line(df_scores['dt'], df_scores.accuracy, legend="Accuracy %", line_color="magenta", line_width = 3)
         p.line(df_scores['dt'], df_scores.reality, legend="Differential %", line_color="blue", line_width = 3)
         p.circle(df_scores['dt'], df_scores.accuracy, line_color='magenta',fill_color="white", size=8)

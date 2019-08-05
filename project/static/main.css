@@ -5,9 +5,8 @@ body {
 }
 
 
-.icon-bar {
-  color: black;
-  background-color: black;
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: black;
 }
 
 /* h1,
